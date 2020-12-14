@@ -1,0 +1,20 @@
+#
+# Copyright IBM Corp All Rights Reserved
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+networks:
+  basic:
+
+services:
+  ca.example.com:
+    image:  mur2/iupmath:1.0.0
+    ports:
+      - "8005:8005"
+    restart: always
+    container_name: mur_iupmath
+    networks:
+      - basic
+
