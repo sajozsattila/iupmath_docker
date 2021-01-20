@@ -1,4 +1,4 @@
-FROM mur2/pandoc:1.0.9
+FROM mur2/pandoc:1.0.10
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -24,7 +24,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 # get i.upmath
 RUN wget https://github.com/sajozsattila/i.upmath.me/archive/master.zip &&  unzip master.zip && rm master.zip &&  mv i.upmath.me-master i.upmath.me 
 WORKDIR /home/mur2/i.upmath.me
-RUN yarn install && composer install && npm install -g bower grunt-cli && bower install --allow-root && grunt
+RUN yarn install && composer install && npm install -g bower grunt-cli && bower install --allow-root && grunt && apt-get -y install optipng && apt-get -y install librsvg2-bin
 # setting config
 COPY Resources/config.php  ./
 
