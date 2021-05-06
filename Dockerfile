@@ -1,4 +1,4 @@
-FROM mur2/pandoc:1.0.10
+FROM mur2/pandoc:1.0.11
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -9,10 +9,12 @@ WORKDIR /home/mur2
 RUN echo 'export PATH=/usr/local/texlive/2020/bin/x86_64-linux:$PATH' >> /root/.bashrc && \
     echo 'export PATH=/opt/pandoc-crossref/bin:$PATH' >> /root/.bashrc
 
+# update nodehs and npm
+RUN apt-get update -y && apt-get install -y git gnupg2  php-cli php-mbstring unzip php-curl php-dom curl dirmngr apt-transport-https lsb-release ca-certificates
+RUN ( curl -sL https://deb.nodesource.com/setup_12.x | bash - ) && apt -y install nodejs && npm update npm -g  && node --version && npm --version
 # i.upmath 
 RUN apt-get -y install software-properties-common curl && \
-    curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
-    apt-get update -y && apt-get install -y git gnupg2  php-cli php-mbstring unzip php-curl php-dom nodejs
+    curl -sL https://deb.nodesource.com/setup_10.x | bash -  
 # add yarn
 RUN (curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg > yarnkey.gpg) && \
     apt-key add yarnkey.gpg && \
